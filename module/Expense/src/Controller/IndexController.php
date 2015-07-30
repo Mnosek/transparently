@@ -1,6 +1,6 @@
 <?php
 
-namespace Message\Controller;
+namespace Expense\Controller;
 
 
 use Core\Mvc\BaseController;

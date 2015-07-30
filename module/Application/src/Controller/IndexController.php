@@ -1,6 +1,6 @@
 <?php
 
-namespace Message\Controller;
+namespace Application\Controller;
 
 
 use Core\Mvc\BaseController;
@@ -8,8 +8,9 @@ use Core\Mvc\BaseController;
 
 class IndexController extends BaseController
 {
-    public function testAction()
+    public function indexAction()
     {
         
     }
+
 }

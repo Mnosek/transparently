@@ -4,28 +4,31 @@ namespace Core\Mvc;
 
 use RuntimeException;
 use Core\Filter;
+use Core\Http\Request;
 
 
 /**
  * Application router class. It dispatches request to the proper controllers
  * Please mind if there is rewrite module configured properly. It should returns
  * whole url in $_GET['_url'];
+ *
+ * @author Michał Nosek <mmnosek@gmail.com>
  */
 final class Router
 {
     /**
      * Request
-     * @var [type]
+     * @var \Core\Http\Request
      */
-    public $url;
+    private $_request;
 
 
     /**
      * Router constructor
      */
-    public function __construct()
+    public function __construct(Request $request)
     {
-        $this->url = $_GET['_url'];
+        $this->_request = $request;
     }
 
 
@@ -34,7 +37,7 @@ final class Router
      */
     public function dispatch()
     {
-        $path = explode('/', trim($this->url, '/'));
+        $path = $this->_request->getPath();
         $this->_setModule($path);
         $this->_setController($path);
         $this->_setAction($path);

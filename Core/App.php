@@ -4,6 +4,8 @@ namespace Core;
 
 use ArrayObject;
 use Core\Mvc\Router;
+use Core\Http\Request;
+use Core\Http\Response;
 
 
 /**
@@ -34,8 +36,21 @@ final class App
 
 
     /**
-     * Private constructor to force singleton
-     * outside the init method
+     * Request instance
+     * @var \Core\Http\Request
+     */
+    private static $_request;
+
+
+     /**
+     * Response instance
+     * @var \Core\Http\Request
+     */
+    private static $_response;
+
+
+    /**
+     * Private constructor to force singleton instance
      */
     private function __construct(){}
 
@@ -59,8 +74,12 @@ final class App
      */
     public function start()
     {
-        self::$registry = new ArrayObject();
-        self::$_router  = new Router();
+        self::$registry  = new ArrayObject();
+        self::$_request  = new Request();
+        self::$_response = new Response();
+        self::$_router   = new Router(self::$_request);
+
+
 
         self::$_router->dispatch();
     }

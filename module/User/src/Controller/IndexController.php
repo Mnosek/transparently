@@ -1,6 +1,6 @@
 <?php
 
-namespace Message\Controller;
+namespace User\Controller;
 
 
 use Core\Mvc\BaseController;

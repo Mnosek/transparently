@@ -5,7 +5,6 @@ namespace Core;
 use ArrayObject;
 use Core\Mvc\Router;
 use Core\Http\Request;
-use Core\Http\Response;
 
 
 /**
@@ -76,12 +75,33 @@ final class App
     {
         self::$registry  = new ArrayObject();
         self::$_request  = new Request();
-        self::$_response = new Response();
         self::$_router   = new Router(self::$_request);
-
-
-
         self::$_router->dispatch();
+        
+        $this->handle();
+    }
+
+
+    /**
+     * Handles request and executes controller
+     * @return void
+     */
+    private function handle()
+    {
+        $controller = self::$_router->getController();
+        $action     = self::$_router->getAction();
+
+        $this->_response = $controller->execute($action);
+    }
+
+
+    /**
+     * Finishes application run
+     * @return void;
+     */
+    private function finish()
+    {
+        echo $this->_response->getContent();
     }
 
 

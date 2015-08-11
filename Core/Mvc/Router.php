@@ -41,6 +41,9 @@ final class Router
         $this->_setModule($path);
         $this->_setController($path);
         $this->_setAction($path);
+
+
+        return $this->_controller;
     }
 
 
@@ -106,4 +109,19 @@ final class Router
             throw new RuntimeException('Invalid action specified');
         }
     }
+
+
+    public function getController()
+    {
+        return $this->_controller;
+    }
+
+
+    public function getAction()
+    {
+        return $this->_action;
+    }
+
+
+
 }

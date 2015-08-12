@@ -43,7 +43,7 @@ final class App
 
      /**
      * Response instance
-     * @var \Core\Http\Request
+     * @var \Core\Http\Response
      */
     private static $_response;
 

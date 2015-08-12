@@ -1,7 +1,8 @@
 <?php
 namespace Core\View;
 
-final class Html extends BaseView
+
+class Html extends BaseView
 {
 
 }

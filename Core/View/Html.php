@@ -46,7 +46,7 @@ class Html extends BaseView
         include $this->_templatePath;
 
         if (!$isBlank) {
-            include DEFAULT_FOOTER;
+            include MODULE_PATH . 'Application' . DIRECTORY_SEPARATOR . 'view' . DIRECTORY_SEPARATOR . 'element' . DIRECTORY_SEPARATOR . self::DEFAULT_FOOTER;
         }
         return ob_get_clean();
     }

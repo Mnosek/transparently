@@ -1,1 +1,1 @@
-<a href="http://www.google.pl"></a>
+<a href="http://www.google.pl"><?php echo $foo; ?></a>

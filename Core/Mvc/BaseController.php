@@ -2,6 +2,7 @@
 
 namespace Core\Mvc;
 
+use Core\App;
 use Core\View\BaseView;
 use Core\View\Html;
 use Core\View\Json;
@@ -9,6 +10,10 @@ use Core\View\Cli;
 use Core\Http\Response;
 
 
+/**
+ * Abstract controller model
+ * @author Michał Nosek <mmnosek@gmail.com>
+ */
 abstract class BaseController
 {
     /**
@@ -32,7 +37,27 @@ abstract class BaseController
     protected $_response;
 
 
+    /**
+     * Executed action
+     * @var string
+     */
+    private $_action;
 
+
+    /**
+     * Returns controller short name
+     * @return string
+     * @todo
+     */
+    public function __toString()
+    {
+        return 'index';
+    }
+
+
+    /**
+     * Controller constructor
+     */
     public function __construct()
     {
         $this->_response = new Response();
@@ -47,6 +72,7 @@ abstract class BaseController
     public function execute($action)
     {
         $this->_beforeExec();
+        $this->_action = $action;
         $this->$action();
         $this->_afterExec();
 
@@ -54,25 +80,31 @@ abstract class BaseController
     }
 
 
+    /**
+     * Prepares to action executrion
+     * @return this
+     */
     private function _beforeExec()
     {
         return $this;
     }
 
 
+    /**
+     * Finishes action execution
+     * @return self
+     */
     private function _afterExec()
     {   
-        if (!$this->_view instanceof BaseView) 
-        {
+        if (!$this->_view instanceof BaseView) {
             $this->setHtml();
         }
 
         $this->_view->bindData($this->_data);
-        $this->_view->render();
 
-        $this->_response->setView();
-
-
+        if (!$this->noRender) {
+            $this->_response->setContent($this->_view->render($this->isBlank));
+        }
 
         return $this;
     }
@@ -84,7 +116,16 @@ abstract class BaseController
      */
     protected function noRender()
     {
-        $this->_view = false;
+        $this->noRender = true;
+    }
+
+
+    /**
+     * Turns HTML footer and header off
+     */
+    protected function setBlank()
+    {
+        $this->isBlank = true;
     }
 
 
@@ -93,7 +134,8 @@ abstract class BaseController
      */
     protected function setHtml()
     {
-        $this->_view = new Html();
+        $this->_response->setHeader('Content-Type', 'text/html; charset=utf-8');
+        $this->_view = new Html($this->_getTemplatePath());
     }
 
 
@@ -103,6 +145,7 @@ abstract class BaseController
     protected function setJson()
     {
         $this->_view = new Json();
+        $this->_response->setHeader('Content-Type', 'text/json; charset=utf-8');
     }
 
 
@@ -123,6 +166,28 @@ abstract class BaseController
     protected function attach($key, $data)
     {
         $this->_data[$key] = $data;
+    }
+
+
+    /**
+     * Returns template file path
+     * @return string
+     */
+    private function _getTemplatePath()
+    {
+        return MODULE_PATH . App::$_router->getModule() . DIRECTORY_SEPARATOR .
+        'view' . DIRECTORY_SEPARATOR . App::$_router->getController() . DIRECTORY_SEPARATOR . 
+        substr(strtolower(App::$_router->getAction()), 0, -6) . '.php';
+    }
+
+
+    /**
+     * Returns response
+     * @return \Core\Http\Response
+     */
+    public function getResponse()
+    {
+        return $this->_response;
     }
 
 }

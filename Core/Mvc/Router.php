@@ -111,17 +111,32 @@ final class Router
     }
 
 
+    /**
+     * Returns matched controller
+     * @return \Core\Mvc\BaseController
+     */
     public function getController()
     {
         return $this->_controller;
     }
 
 
+    /**
+     * Returns matched action
+     * @return string
+     */
     public function getAction()
     {
         return $this->_action;
     }
 
 
-
+    /**
+     * Returns matched module
+     * @return string
+     */
+    public function getModule()
+    {
+        return $this->_module;
+    }
 }

@@ -31,7 +31,7 @@ final class App
      * Router instance
      * @var \Core\Mvc\Router
      */
-    private static $_router;
+    public static $_router;
 
 
     /**
@@ -92,15 +92,23 @@ final class App
         $action     = self::$_router->getAction();
 
         $this->_response = $controller->execute($action);
+        $this->finish();
     }
 
 
     /**
      * Finishes application run
+     * Sends headers and content to browser
      * @return void;
      */
     private function finish()
     {
+        if (!$this->isConsole()) {
+            foreach ($this->_response->getHeaders() as $header) {
+                header((string)$header, true, $this->_response->getCode());
+            }
+        }
+
         echo $this->_response->getContent();
     }
 

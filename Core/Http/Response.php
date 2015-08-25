@@ -2,6 +2,8 @@
 
 namespace Core\Http;
 
+use Core\View\Html;
+
 
 /**
  * HTTP Response model
@@ -47,8 +49,10 @@ class Response
     public function setCode($httpCode = 200)
     {
         if (!in_array($httpCode, self::$_allowedHttp)) {
-            $this->_httpCode = 500;
+            throw new \RuntimeException('Invalid HTTP Code');
         }
+
+        $this->_httpCode = $httpCode;
     }   
 
 
@@ -99,6 +103,32 @@ class Response
     public function getHeaders()
     {
         return $this->_headers;
+    }
+
+
+    /**
+     * Sets fatal error view
+     * @param \Exception $e
+     */
+    public function setFatalError(\Exception $e)
+    {
+        $this->setHeader('Content-Type', 'text/html; charset=utf-8');
+        $view = new Html($this->_getErrorTemplate());
+        $view->bindData(array('e' => $e));
+        $this->setContent($view->render(true));
+        $this->setCode(500);
+
+        return $this;
+    }
+
+
+    /**
+     * Returns error template path
+     * @return string
+     */
+    private function _getErrorTemplate()
+    {
+        return MODULE_PATH . DIRECTORY_SEPARATOR . 'Application' . DIRECTORY_SEPARATOR . 'view' . DIRECTORY_SEPARATOR . 'element' . DIRECTORY_SEPARATOR . 'fatal-error.php';
     }
 
 }

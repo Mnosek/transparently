@@ -5,7 +5,7 @@ namespace Core;
 use ArrayObject;
 use Core\Mvc\Router;
 use Core\Http\Request;
-
+use Core\Http\Response;
 
 /**
  * Application core class
@@ -73,12 +73,17 @@ final class App
      */
     public function start()
     {
-        self::$registry  = new ArrayObject();
-        self::$_request  = new Request();
-        self::$_router   = new Router(self::$_request);
-        self::$_router->dispatch();
+        try {
+            self::$registry  = new ArrayObject();
+            self::$_request  = new Request();
+            self::$_router   = new Router(self::$_request);
+            self::$_router->dispatch();
+            
+            $this->handle();
         
-        $this->handle();
+        } catch (\Exception $e) {
+            $this->_handleError($e);
+        }
     }
 
 
@@ -110,6 +115,19 @@ final class App
         }
 
         echo $this->_response->getContent();
+    }
+
+
+    /**
+     * Handles critical exceptions
+     * @param  \Exception $e 
+     */
+    private function _handleError(\Exception $e)
+    {
+        $response = new Response();
+        $response->setFatalError($e);
+        header($_SERVER['SERVER_PROTOCOL'] . ' 500 Internal Server Error', true, 500);
+        echo $response->getContent();
     }
 
 

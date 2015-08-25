@@ -7,7 +7,7 @@ namespace Core\View;
  * Default HTML view model
  * @author <mmnosek@gmail.com>
  */
-class Html extends BaseView
+final class Html extends BaseView
 {
     CONST DEFAULT_HEADER = 'header.php' ;
     CONST DEFAULT_FOOTER = 'footer.php' ;
@@ -25,6 +25,10 @@ class Html extends BaseView
      * @param string $templatePath path to template file
      */
     public function __construct($templatePath) {
+        if (!file_exists($templatePath)) {
+            throw new \Exception('Template file not found');    
+        }
+        
         $this->_templatePath = $templatePath;
     }
 

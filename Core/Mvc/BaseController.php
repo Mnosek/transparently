@@ -47,11 +47,12 @@ abstract class BaseController
     /**
      * Returns controller short name
      * @return string
-     * @todo
      */
     public function __toString()
     {
-        return 'index';
+        $class = new \ReflectionClass(get_class($this));
+
+        return strtolower(str_replace('Controller', '', $class->getShortName()));
     }
 
 

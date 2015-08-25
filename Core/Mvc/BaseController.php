@@ -38,6 +38,13 @@ abstract class BaseController
 
 
     /**
+     * Page title
+     * @var string
+     */
+    protected $_title;
+
+
+    /**
      * Executed action
      * @var string
      */
@@ -87,6 +94,7 @@ abstract class BaseController
      */
     private function _beforeExec()
     {
+        $this->_title = 'Transparently';
         return $this;
     }
 
@@ -101,11 +109,14 @@ abstract class BaseController
             $this->setHtml();
         }
 
-        $this->_view->bindData($this->_data);
 
         if (!$this->noRender) {
+            $this->attach('title', $this->_title);
+            $this->_view->bindData($this->_data);
             $this->_response->setContent($this->_view->render($this->isBlank));
         }
+
+
 
         return $this;
     }
@@ -127,6 +138,15 @@ abstract class BaseController
     protected function setBlank()
     {
         $this->isBlank = true;
+    }
+
+
+    /**
+     * Sets page title
+     */
+    protected function setTitle($title)
+    {
+        $this->_title = 'Transparently - ' . $title;
     }
 
 

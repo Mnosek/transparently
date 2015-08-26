@@ -3,6 +3,7 @@
 namespace Core;
 
 use ArrayObject;
+use Core\Model\BaseModel;
 use Core\Mvc\Router;
 use Core\Http\Request;
 use Core\Http\Response;
@@ -28,6 +29,13 @@ final class App
 
 
     /**
+     * Config object
+     * @var ?
+     */
+    public static $config;
+
+
+    /**
      * Router instance
      * @var \Core\Mvc\Router
      */
@@ -41,11 +49,18 @@ final class App
     private static $_request;
 
 
-     /**
+    /**
      * Response instance
      * @var \Core\Http\Response
      */
     private static $_response;
+
+    /**
+     * Db handler
+     * @var \Core\Db
+     */
+    private static $_db;
+
 
 
     /**
@@ -74,6 +89,8 @@ final class App
     public function start()
     {
         try {
+            self::$config    = $this->_parseConfig();
+            BaseModel::init();
             self::$registry  = new ArrayObject();
             self::$_request  = new Request();
             self::$_router   = new Router(self::$_request);
@@ -131,6 +148,13 @@ final class App
     }
 
 
+    private function _parseConfig()
+    {
+        //dirty trick
+        return json_decode(json_encode(parse_ini_file(ROOT_PATH . '/config/server.ini', true)));
+    }
+
+
     /**
      * Returns true if CLI context
      * @return bool
@@ -138,5 +162,19 @@ final class App
     public static function isConsole()
     {
         return PHP_SAPI == 'cli';
+    }
+
+
+    /**
+     * Returns db handler
+     * @todo
+     */
+    public function getDb()
+    { 
+        if (!self::$_db instanceof Db) {
+            self::$_db = new Db();
+        }
+        
+        return self::$_db;
     }
 }

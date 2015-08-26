@@ -2,6 +2,8 @@
 
 namespace Core\Model;
 
+use Core\App;
+
 
 /**
  * Base application model. All models except core should extends it.
@@ -9,5 +11,19 @@ namespace Core\Model;
  */
 abstract class BaseModel
 {
+    /**
+     * Database handle
+     * @var \Core\Db
+     */
+    protected static $_db;
 
+
+    /**
+     * Model initialization (sets db handler)
+     */
+    public static function init()
+    {
+        self::$_db = App::getDb();
+        self::$_db->connect();
+    }
 }

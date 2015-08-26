@@ -211,4 +211,50 @@ abstract class BaseController
         return $this->_response;
     }
 
+
+    protected function _redirect($url)
+    {
+        $this->noRender();
+        return $this->_response->redirect($url);
+    }
+
+
+    /**
+     * Redirects back
+     */
+    public function back()
+    {
+        if ($_SERVER['HTTP_REFERER']) {
+            return $this->_redirect($_SERVER['HTTP_REFERER']);
+        } else {
+            return $this->_redirect('/');
+        }
+    }
+
+
+    /**
+     * Refuses access and redirects back
+     */
+    public function deny()
+    {
+
+    }
+
+
+    public function success($msg)
+    {
+
+    }
+
+
+    public function error($msg)
+    {
+
+    }
+
+
+    public function notify($msg)
+    {
+
+    }
 }

@@ -24,6 +24,5 @@ abstract class BaseModel
     public static function init()
     {
         self::$_db = App::getDb();
-        self::$_db->connect();
     }
 }

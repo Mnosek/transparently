@@ -130,7 +130,7 @@ final class App
                 header((string)$header, true, $this->_response->getCode());
             }
         }
-
+        
         echo $this->_response->getContent();
     }
 

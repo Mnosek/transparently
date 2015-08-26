@@ -17,7 +17,8 @@ class Response
      */
     private static $_allowedHttp = array(
         200,
-        500
+        500,
+        302
     );
 
 
@@ -103,6 +104,14 @@ class Response
     public function getHeaders()
     {
         return $this->_headers;
+    }
+
+
+    public function redirect($url)
+    {
+        $this->setHeader('Location', $url);
+        $this->setCode(302);
+
     }
 
 

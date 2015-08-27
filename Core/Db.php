@@ -30,7 +30,6 @@ final class Db
      */
     public function connect()
     {
-        echo 'connect';
         $this->_pdo = new PDO (
             'mysql:host=' . App::$config->dbhost . ';dbname=' . App::$config->dbname, 
             App::$config->dbuser, 
@@ -52,7 +51,7 @@ final class Db
      */
     public function query($sql, $bind = array())
     {
-        if (!$this->$_connected) {
+        if (!$this->_connected) {
             $this->connect();
         }
 
@@ -91,7 +90,7 @@ final class Db
      */
     public function execDML($sql, $bind =array())
     {
-        if (!$this->$_connected) {
+        if (!$this->_connected) {
             $this->connect();
         }
 
@@ -116,7 +115,7 @@ final class Db
         } else {
 
             $stm = $this->_pdo->exec($sql);
-            $this->lastId = $this->pdo->lastInsertId();
+            $this->lastId = $this->_pdo->lastInsertId();
 
             return $stm;
         }
@@ -183,5 +182,19 @@ final class Db
         }
 
         return $this->_pdo->quote($param);
+    }
+
+
+    /**
+     * Returns true if db is connected
+     * @return boolean
+     */
+    public function isConnected()
+    {
+        if ($this->_connected) {
+            return true;
+        }
+
+        return false;
     }
 }

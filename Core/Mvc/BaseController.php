@@ -94,7 +94,7 @@ abstract class BaseController
      */
     private function _beforeExec()
     {
-        $this->_title = 'Transparently';
+        $this->_title = App::$config->title;
         return $this;
     }
 
@@ -146,7 +146,7 @@ abstract class BaseController
      */
     protected function setTitle($title)
     {
-        $this->_title = 'Transparently - ' . $title;
+        $this->_title = App::$config->title . ' - ' . $title;
     }
 
 
@@ -237,7 +237,8 @@ abstract class BaseController
      */
     public function deny()
     {
-
+        $this->error('Brak uprawnień!');
+        $this->back();
     }
 
 

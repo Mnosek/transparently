@@ -7,6 +7,8 @@ use Core\Model\BaseModel;
 use Core\Mvc\Router;
 use Core\Http\Request;
 use Core\Http\Response;
+use Core\App\User as AppUser;
+use Core\App\Session;
 
 /**
  * Application core class
@@ -62,6 +64,16 @@ final class App
     private static $_db;
 
 
+    /**
+     * Application user object
+     * @var \Core\App\User
+     */
+    public static $user;
+
+
+    public static $session;
+
+
 
     /**
      * Private constructor to force singleton instance
@@ -91,6 +103,13 @@ final class App
         try {
             self::$config    = $this->_parseConfig();
             BaseModel::init();
+            self::$session = new Session();
+            $this->_prepareSession();
+
+
+            //@todo
+            //self::$user = new AppUser(self::$session->userData);
+
             self::$registry  = new ArrayObject();
             self::$_request  = new Request();
             self::$_router   = new Router(self::$_request);
@@ -176,5 +195,18 @@ final class App
         }
         
         return self::$_db;
+    }
+
+
+    private function _prepareSession()
+    {
+        session_write_close();
+        session_set_save_handler(array(&self::$session,"open"), 
+                         array(&self::$session,"close"), 
+                         array(&self::$session,"read"), 
+                         array(&self::$session,"write"), 
+                         array(&self::$session,"destroy"), 
+                         array(&self::$session,"gc")); 
+        session_start(); 
     }
 }

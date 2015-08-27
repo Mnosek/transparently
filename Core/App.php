@@ -71,8 +71,11 @@ final class App
     public static $user;
 
 
+    /**
+     * Custom session obj
+     * @var \Core\App\Session
+     */
     public static $session;
-
 
 
     /**
@@ -106,10 +109,7 @@ final class App
             self::$session = new Session();
             $this->_prepareSession();
 
-
-            //@todo
-            //self::$user = new AppUser(self::$session->userData);
-
+            self::$user     = new AppUser(self::$session->userData);
             self::$registry  = new ArrayObject();
             self::$_request  = new Request();
             self::$_router   = new Router(self::$_request);
@@ -186,7 +186,7 @@ final class App
 
     /**
      * Returns db handler
-     * @todo
+     * @return \Core\Db
      */
     public function getDb()
     { 
@@ -198,6 +198,10 @@ final class App
     }
 
 
+    /**
+     * Prepares session object
+     * @return void
+     */
     private function _prepareSession()
     {
         session_write_close();
@@ -208,5 +212,7 @@ final class App
                          array(&self::$session,"destroy"), 
                          array(&self::$session,"gc")); 
         session_start(); 
+
+        self::$session->prepare();
     }
 }

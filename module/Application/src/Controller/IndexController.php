@@ -12,7 +12,7 @@ use Core\App;
 class IndexController extends BaseController
 {
     public function indexAction()
-    {
+    {   
         $this->attach('foo', 'FOOO');
     }
 }

@@ -16,7 +16,57 @@ class Session extends BaseModel
      */
     private $_lifeTime; 
 
-    
+
+    /**
+     * Session constructor
+     * @return [type] [description]
+     */
+    public function __counstruct()
+    {
+        parent::__counstruct();
+    }
+
+
+    /**
+     * Sets data from $_SESSION
+     */
+    public function prepare()
+    {
+        foreach($_SESSION as $key => $value) {
+            $this[$key] = $value;
+        }
+    }
+
+
+    /**
+     * Magic setter to set $_SESSION and instance value
+     * @param string $name
+     * @param mixed $value
+     */
+    public function __set($name, $value)
+    {
+        $_SESSION[$name] = $value;
+        $this[$name] = $value;
+    }
+
+
+    /**
+     * Magic getter to return value by ->
+     * @param  string $name
+     * @return mixed
+     */
+    public function __get($name)
+    {
+        return $this[$name];
+    }
+
+
+    /**
+     * Session open handler
+     * @param $savePath
+     * @param $sessName
+     * @return boolean
+     */
     public function open($savePath, $sessName) { 
         $this->_lifeTime = get_cfg_var("session.gc_maxlifetime"); 
        
@@ -64,6 +114,7 @@ class Session extends BaseModel
      * @return boolean
      */
     public function write($sessID,$sessData) { 
+
         $newExp = time() + $this->_lifeTime; 
 
         $res = self::$_db->query("SELECT * FROM session_tab WHERE session_id = :session_id", array('session_id' => $sessID));

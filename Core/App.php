@@ -167,6 +167,10 @@ final class App
     }
 
 
+    /**
+     * Parses config file
+     * @return
+     */
     private function _parseConfig()
     {
         //dirty trick

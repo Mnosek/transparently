@@ -17,3 +17,6 @@
             };
         </script>
         <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/dojo/1.10.4/dojo/dojo.js"></script>
+
+
+        <?php var_dump($flashMsg); ?>

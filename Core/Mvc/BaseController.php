@@ -8,6 +8,8 @@ use Core\View\Html;
 use Core\View\Json;
 use Core\View\Cli;
 use Core\Http\Response;
+use Core\Input;
+use Core\FlashMessenger;
 
 
 /**
@@ -35,6 +37,13 @@ abstract class BaseController
      * @var \Core\Http\Response
      */
     protected $_response;
+
+
+    /**
+     * True if controller can be accessed without logging
+     * @var boolean
+     */
+    protected $_isPublic = false;
 
 
     /**
@@ -69,6 +78,8 @@ abstract class BaseController
     public function __construct()
     {
         $this->_response = new Response();
+        $this->input     = new Input();
+        $this->messenger = FlashMessenger::instance();
     }
 
 
@@ -94,7 +105,12 @@ abstract class BaseController
      */
     private function _beforeExec()
     {
+        if (!$this->_isPublic && !App::$user->isLogged()) {
+            $this->_redirect('/application/login/index');
+        }
+
         $this->_title = App::$config->title;
+        $this->attach('flashMsg', $this->messenger->getMessages());
         return $this;
     }
 
@@ -105,19 +121,14 @@ abstract class BaseController
      */
     private function _afterExec()
     {   
-        if (!$this->_view instanceof BaseView) {
-            $this->setHtml();
-        }
-
-
         if (!$this->noRender) {
+            if (!$this->_view instanceof BaseView) {
+                $this->setHtml();
+            }
             $this->attach('title', $this->_title);
             $this->_view->bindData($this->_data);
             $this->_response->setContent($this->_view->render($this->isBlank));
         }
-
-
-
         return $this;
     }
 
@@ -242,20 +253,32 @@ abstract class BaseController
     }
 
 
+    /**
+     * Adds success message
+     * @param  string $msg
+     */
     public function success($msg)
     {
-
+        $this->messenger->setMessage($msg, FlashMessenger::SUCCESS);
     }
 
 
+    /**
+     * Adds error message
+     * @param  string $msg
+     */
     public function error($msg)
     {
-
+        $this->messenger->setMessage($msg, FlashMessenger::ERROR);
     }
 
 
-    public function notify($msg)
+    /**
+     * Adds info message
+     * @param  string $msg
+     */
+    public function info($msg)
     {
-
+        $this->messenger->setMessage($msg, FlashMessenger::INFO);
     }
 }

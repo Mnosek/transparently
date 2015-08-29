@@ -130,7 +130,7 @@ class Session extends BaseModel
             $res = self::$_db->execDML("INSERT INTO session_tab (session_id, session_expires, session_data) VALUES(:sessID, :exp, :data)",
                                 array('sessID'   => $sessID,
                                       'exp'      => $newExp,
-                                      'data' => $sessData));
+                                      'data'     => $sessData));
             //@todo
             //Check if session insertted to db 
             return true;

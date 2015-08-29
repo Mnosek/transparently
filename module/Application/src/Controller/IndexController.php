@@ -11,6 +11,11 @@ use Core\App;
  */
 class IndexController extends BaseController
 {
+    /**
+     * Application main page
+     * @todo
+     * @return
+     */
     public function indexAction()
     {   
         $this->attach('foo', 'FOOO');

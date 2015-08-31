@@ -6,23 +6,23 @@ namespace Expense\Controller;
 use Core\Mvc\BaseController;
 
 
-class IndexController extends BaseController
+class GroupController extends BaseController
 {
     public function listAction()
     {
-        $this->setTitle('Twoje rachunki');
+        $this->setTitle('Twoje grupyt');
     }
 
 
     public function indexAction()
     {
-        $this->setTitle('Rachunek - ');
+        $this->setTitle('Grupa - ');
     }
 
 
-    public function addExpenseAction()
+    public function addGroupAction()
     {
-        $this->setTitle('Dodaj rachunek');
+        $this->setTitle('Dodaj grupę');
     }
 
 

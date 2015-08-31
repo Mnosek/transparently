@@ -76,7 +76,7 @@ class FlashMessenger
         if (!$this->messages) {
             $this->messages = App::$session->messenger;
             App::$session->messenger = null;
-        }
+        }   
 
         return $this->messages;
     }

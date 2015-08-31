@@ -51,6 +51,16 @@ final class User extends BaseModel
 
 
     /**
+     * Returns user name and last name
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->name . ' ' . $this->last_name;
+    }
+
+
+    /**
      * Appends data from arry
      * @param $data
      */
@@ -77,7 +87,7 @@ final class User extends BaseModel
             'password' => $this->_getPasswordHash($password, $login)
         );
 
-
+        
         $query = "SELECT * FROM user_tab WHERE email=:login AND password=:password";
         $res = self::$_db->query($query, $params);
 

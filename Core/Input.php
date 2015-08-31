@@ -17,7 +17,7 @@ class Input extends BaseModel
      */
     public function get($key = null)
     {
-        if (!$key) {
+        if ($key) {
             return $_GET[$key];
         }
 
@@ -32,7 +32,7 @@ class Input extends BaseModel
      */
     public function post($key = null)
     {
-        if (!$key) {
+        if ($key) {
             return $_POST[$key];
         }
         

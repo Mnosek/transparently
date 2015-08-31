@@ -18,6 +18,6 @@ class IndexController extends BaseController
      */
     public function indexAction()
     {   
-        $this->attach('foo', 'FOOO');
+        $this->setTitle('Dashboard');
     }
 }

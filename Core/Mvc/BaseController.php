@@ -92,6 +92,10 @@ abstract class BaseController
     {
         $this->_beforeExec();
         $this->_action = $action;
+        if (method_exists($this, 'init')) {
+            $this->init();
+        }
+
         $this->$action();
         $this->_afterExec();
 
@@ -157,7 +161,7 @@ abstract class BaseController
      */
     protected function setTitle($title)
     {
-        $this->_title = App::$config->title . ' - ' . $title;
+        $this->_title = $title;
     }
 
 

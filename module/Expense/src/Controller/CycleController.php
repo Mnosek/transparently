@@ -6,7 +6,7 @@ namespace Expense\Controller;
 use Core\Mvc\BaseController;
 
 
-class CycleControlelr extends BaseController
+class CycleController extends BaseController
 {
     public function indexAction()
     {
@@ -16,7 +16,7 @@ class CycleControlelr extends BaseController
 
     public function listAction()
     {
-        $this->setTitle('Lista wydatków');
+        $this->setTitle('Wydatki cykliczne');
     }
 
 

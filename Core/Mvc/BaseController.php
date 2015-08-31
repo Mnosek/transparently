@@ -9,6 +9,7 @@ use Core\View\Json;
 use Core\View\Cli;
 use Core\Http\Response;
 use Core\Input;
+use Core\FIlter;
 use Core\FlashMessenger;
 
 
@@ -213,7 +214,7 @@ abstract class BaseController
     {
         return MODULE_PATH . App::$_router->getModule() . DIRECTORY_SEPARATOR .
         'view' . DIRECTORY_SEPARATOR . App::$_router->getController() . DIRECTORY_SEPARATOR . 
-        substr(strtolower(App::$_router->getAction()), 0, -6) . '.php';
+        substr(Filter::camelCaseToDash(App::$_router->getAction()), 0, -7) . '.php';
     }
 
 
@@ -227,6 +228,10 @@ abstract class BaseController
     }
 
 
+    /**
+     * Redirects to another page
+     * @param  string $url
+     */
     protected function _redirect($url)
     {
         $this->noRender();

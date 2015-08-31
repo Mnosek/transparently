@@ -1,6 +1,6 @@
 <?php
 
-namespace Expense\Controller;
+namespace People\Controller;
 
 
 use Core\Mvc\BaseController;

@@ -9,7 +9,7 @@ use Core\Mvc\BaseController;
 class IndexController extends BaseController
 {
     public function listAction()
-    {
-        
+    {  
+        $this->setTitle('Wiadomości');
     }
 }

@@ -4,7 +4,7 @@
             <meta charset="utf-8">
             <title><?php echo Core\App::$config->title . ' - ' . $title; ?></title>
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <link rel="stylesheet" href="res/css/bootstrap.css">
+            <link rel="stylesheet" href="/res/css/bootstrap.css">
             <link href="/res/css/style.css" rel="stylesheet">
         </head>
     
@@ -36,9 +36,9 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="#">Wiadomości</a></li>
-            <li><a href="#">Profil</a></li>
-            <li><a href="application/login/logout">Wyloguj</a></li>
+            <li><a href="/message/index/list">Wiadomości</a></li>
+            <li><a href="/user/index/profile">Profil</a></li>
+            <li><a href="/application/login/logout">Wyloguj</a></li>
           </ul>
         </div>
       </div>
@@ -51,20 +51,20 @@
             <li class="active"><a href="/">Dashboard <span class="sr-only">(current)</span></a></li>
           </ul>
           <ul class="nav nav-sidebar">
-            <li><a href="#">Rachunki</a></li>
-            <li><a href="#">Dodaj rachunek</a></li>
-            <li><a href="#">Koszty cykliczne</a></li>
-            <li><a href="#">Dodaj koszt cykliczny</a></li>
+            <li><a href="/expense/index/list">Rachunki</a></li>
+            <li><a href="/expense/index/add-expense">Dodaj rachunek</a></li>
+            <li><a href="/expense/cycle/list">Koszty cykliczne</a></li>
+            <li><a href="/expense/cycle/add-cycle">Dodaj koszt cykliczny</a></li>
           </ul>
           <ul class="nav nav-sidebar">
-            <li><a href="">Wpłaty</a></li>
-            <li><a href="">Nowa wpłata</a></li>
+            <li><a href="/expense/payment/list">Wpłaty</a></li>
+            <li><a href="/expense/payment/add-payment">Nowa wpłata</a></li>
           </ul>
           <ul class="nav nav-sidebar">
-            <li><a href="">Grupy</a></li>
-            <li><a href="">Dodaj grupę</a></li>
-            <li><a href="">Znajomi</a></li>
-            <li><a href="">Zaproś znajomego</a></li>
+            <li><a href="/people/group/list">Grupy</a></li>
+            <li><a href="/people/group/add-group">Dodaj grupę</a></li>
+            <li><a href="/people/friend/list">Znajomi</a></li>
+            <li><a href="/people/friend/search">Zaproś znajomego</a></li>
           </ul>
         </div>
 

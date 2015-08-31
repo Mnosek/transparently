@@ -84,7 +84,7 @@ final class User extends BaseModel
     {
         $params = array (
             'login'    => $login,
-            'password' => $this->_getPasswordHash($password, $login)
+            'password' => self::getPasswordHash($password, $login)
         );
 
         
@@ -112,7 +112,7 @@ final class User extends BaseModel
      * @param  string $login
      * @return string encoded password hash
      */
-    private function _getPasswordHash($password, $login)
+    public static function getPasswordHash($password, $login)
     {
         return md5($login . '|' . $password);
     }

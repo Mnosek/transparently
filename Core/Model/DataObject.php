@@ -17,7 +17,7 @@ abstract class DataObject extends BaseModel
 
 
     /**
-     * Returns table name
+     * Should return table name
      */
     abstract public function getTableName();
 
@@ -197,7 +197,7 @@ abstract class DataObject extends BaseModel
                 $sql .= $where;
             }
 
-            self::$_db->exec($sql, $this->getArrayCopy());
+            self::$_db->execDML($sql, $this->getArrayCopy());
 
             return $this;
         }
@@ -226,7 +226,7 @@ abstract class DataObject extends BaseModel
             $values = rtrim($values,',');
             $sql .= '(' . $values  . ')';
 
-            self::$_db->exec($sql, $params);
+            self::$_db->execDML($sql, $params);
             $this->setId(self::$_db->getId());
 
         }

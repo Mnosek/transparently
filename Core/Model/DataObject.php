@@ -2,6 +2,7 @@
 
 namespace Core\Model;
 
+use Exception;
 
 /**
  * Base data model.
@@ -21,6 +22,8 @@ abstract class DataObject extends BaseModel
      */
     abstract public function getTableName();
 
+    protected static $customParam = array();
+    protected static $customValue = array();
 
     /**
      * Returns object private fields
@@ -122,7 +125,7 @@ abstract class DataObject extends BaseModel
 
         $sql = 'SELECT * FROM ' . $tableName . ' WHERE 1=1';
 
-        if ($params) {
+        if ($params || self::$customParam) {
             $prepareParam = $instance->prepareParams($params);
             if ($prepareParam) {
                 $sql .=' AND ' . $prepareParam;
@@ -137,7 +140,6 @@ abstract class DataObject extends BaseModel
 
         foreach (self::$_db->query($sql, $params) as $row) {
             $object = new static($row);
-
             if ($object->id()) {
                 $objects[$object->id()] = $object;
             } else {
@@ -269,6 +271,7 @@ abstract class DataObject extends BaseModel
         }
 
         if (is_array($primaryKeys)) {
+
             foreach($primaryKeys as $key) {
                 if ($this->$key == null) {
                     return false;
@@ -312,7 +315,21 @@ abstract class DataObject extends BaseModel
                 unset($params[$key]);
             }
         }
+
+        foreach (self::$customParam as $param) {
+            $conditions[] = $param;
+        }  
+
+        foreach (self::$customValue as $key => $value) {
+            $params[$key] = $value;
+        }
+     
+        self::$customParam = array();
+        self::$customValue = array();
+
+       
         $params = array_merge($params, $bindParam);
+
         return implode(' AND ', $conditions);
     }
 

@@ -21,7 +21,6 @@
       </script>
       <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/dojo/1.10.4/dojo/dojo.js"></script>
       <script type="text/javascript" src="/res/js/base.js"></script>
-      <script type="text/javascript" src="/res/js/base.js"></script>
 
 
       <?php

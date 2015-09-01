@@ -137,7 +137,7 @@ final class Db
      */
     public function beginTransaction()
     {
-        if (!$this->$_connected) {
+        if (!$this->_connected) {
             $this->connect();
         }
 
@@ -150,7 +150,7 @@ final class Db
      */
     public function commit()
     {
-        if (!$this->$_connected) {
+        if (!$this->_connected) {
             $this->connect();
         }
 
@@ -163,7 +163,7 @@ final class Db
      */
     public function rollback()
     {
-        if (!$this->$_connected) {
+        if (!$this->_connected) {
             $this->connect();
         }
 
@@ -177,7 +177,7 @@ final class Db
      */
     public function quote($param)
     {
-        if (!$this->$_connected) {
+        if (!$this->_connected) {
             $this->connect();
         }
 

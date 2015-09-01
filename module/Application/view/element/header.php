@@ -5,7 +5,10 @@
             <title><?php echo Core\App::$config->title . ' - ' . $title; ?></title>
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <link rel="stylesheet" href="/res/css/bootstrap.css">
+
+
             <link href="/res/css/style.css" rel="stylesheet">
+
         </head>
     
         <body class="padding-top: 50px;">        
@@ -21,9 +24,7 @@
         <script type="text/javascript" src="/res/js/base.js"></script>
 
 
-
-
-           <nav class="navbar navbar-inverse navbar-fixed-top">
+       <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container-fluid">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -62,9 +63,7 @@
           </ul>
           <ul class="nav nav-sidebar">
             <li><a href="/people/group/list">Grupy</a></li>
-            <li><a href="/people/group/add-group">Dodaj grupę</a></li>
             <li><a href="/people/friend/list">Znajomi</a></li>
-            <li><a href="/people/friend/search">Zaproś znajomego</a></li>
           </ul>
         </div>
 

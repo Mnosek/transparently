@@ -4,6 +4,7 @@ namespace Core\App;
 
 use Core\App;
 use Core\Model\BaseModel;
+use User\User as UserModel;
 
 /**
  * Application user model
@@ -102,6 +103,20 @@ final class User extends BaseModel
 
             return true;
         }
+        return false;
+    }
+
+
+    /**
+     * Returns connected user object
+     * @return \User\User
+     */
+    public function getUser()
+    {
+        if ($this->user_id) {
+            return UserModel::instance($this->user_id);
+        }
+
         return false;
     }
 

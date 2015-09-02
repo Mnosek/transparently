@@ -80,6 +80,7 @@ abstract class DataObject extends BaseModel
             $tableName = $instance->getViewName();
         } else {
             $tableName = $instance->getTableName();
+
         }
 
         $sql = "SELECT * FROM " . $tableName . " WHERE 1=1 ";
@@ -104,6 +105,7 @@ abstract class DataObject extends BaseModel
                 throw new Exception("Invalid object Id array");
             }
         }
+      
 
         foreach (self::$_db->query($sql, $idObject) as $row) {
             $objects = new static($row);
@@ -135,6 +137,7 @@ abstract class DataObject extends BaseModel
         if ($order && preg_match('/([a-zA-z]+)\s(ASC|DESC)/i', $order)) {
             $sql .= " ORDER BY " . $order;
         }
+
 
         $objects = array();
 

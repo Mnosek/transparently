@@ -53,9 +53,7 @@
           </ul>
           <ul class="nav nav-sidebar">
             <li><a href="/expense/index/list">Rachunki</a></li>
-            <li><a href="/expense/index/add-expense">Dodaj rachunek</a></li>
             <li><a href="/expense/cycle/list">Koszty cykliczne</a></li>
-            <li><a href="/expense/cycle/add-cycle">Dodaj koszt cykliczny</a></li>
           </ul>
           <ul class="nav nav-sidebar">
             <li><a href="/expense/payment/list">Wpłaty</a></li>

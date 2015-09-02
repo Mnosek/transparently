@@ -6,13 +6,28 @@ use Core\Model\DataObject;
 use Core\Model\Interfaces\Sanitizable;
 use Core\App;
 use Exception;
+use User\User;
 
 
 class Group extends DataObject
 {
+
+    /**
+     * Group members
+     * @var \User\User
+     */
+    private $_members;
+
+
     public function getTableName()
     {
         return 'group_tab';
+    }
+
+
+    public function getViewName()
+    {
+        return 'pai.group';
     }
 
 
@@ -48,5 +63,48 @@ class Group extends DataObject
             self::$_db->rollback();
             throw $e;
         }
+    }
+
+
+    /**
+     * Returns group members
+     * @return \User\User[]
+     */
+    public function getMembers()
+    {
+        if ($this->_members) {
+            return $this->_members;
+        }
+        
+        $users = array();
+        $members =  self::$_db->query("SELECT user_id FROM user_group_tab WHERE group_id = :group_id", array('group_id' => $this->id()));
+
+        if (!count($members)) {
+            return;
+        }
+        
+        foreach ($members as $member) {
+            $users[] = $member['user_id'];
+        }
+
+        $this->_members = User::find(array('user_id' => $users), 'last_name');
+
+        return $this->_members;
+    }
+
+
+    /**
+     * Checks if user is attached to the group
+     * @return boolean
+     */
+    public function checkAccess()
+    {
+        foreach ($this->getMembers() as $user) {
+            if (App::$user->user_id == $user->id()) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

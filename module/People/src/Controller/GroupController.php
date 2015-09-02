@@ -30,6 +30,31 @@ class GroupController extends BaseController
     {
         $this->setBlank();
 
+        $groups = Group::find(array('user_id' => App::$user->user_id), 'name');
+        $this->attach('groups', $groups);
+    }
+
+
+    public function expenseMemberAction()
+    {
+        $this->setBlank();
+
+        try {
+            if (!$this->input->get('group_id')) {
+                throw new Exception('Nie odnaleziono grupy');
+            }
+
+            $group = Group::instance($this->input->get('group_id'));
+            if (!$group->checkAccess()) {
+                throw new Exception('Nie odnaleziono grupy');
+            }
+
+            $this->attach('members', $group->getMembers());
+
+        } catch (Exception $e) {
+            $this->_response->setCode(500);
+            return;
+        }
     }
 
 
@@ -51,9 +76,6 @@ class GroupController extends BaseController
         } finally {
             return;
         }
-
-
-        var_dump($this->input->post());
 
     }
 }

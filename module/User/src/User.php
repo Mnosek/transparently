@@ -30,4 +30,18 @@ class User extends DataObject
 
         return User::find(array('user_id' => $users), 'last_name');
     }
+
+
+    public function getBalance()
+    {
+        $params['user_id'] = $this->id();
+        return reset(self::$_db->query("SELECT * FROM user_balance WHERE user_id = :user_id", $params));
+    }
+
+
+    public function getGroupBalance()
+    {
+        $params['user_id'] = $this->id();
+        return self::$_db->query("SELECT * FROM user_group_balance WHERE user_id = :user_id", $params);
+    }
 }

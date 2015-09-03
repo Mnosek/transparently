@@ -146,4 +146,18 @@ final class User extends BaseModel
         return App::$session->isLogged;
     }
 
+
+    public function getBalance()
+    {
+        $user = UserModel::instance(App::$user->user_id);
+        return $user->getBalance();
+    }
+
+    public function getGroupBalance()
+    {
+        $user = UserModel::instance(App::$user->user_id);
+        return $user->getGroupBalance();
+
+    }
+
 }

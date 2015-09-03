@@ -14,6 +14,12 @@ class Expense extends DataObject
     }
 
 
+    public function getViewName()
+    {
+        return 'expense';
+    }
+
+
     public function insert()
     {
         if (!is_array($this->userId)) {
@@ -45,6 +51,12 @@ class Expense extends DataObject
                 if ($sum != 100) {
                     throw new Exception('Niepoprawna suma');
                 }
+
+                foreach($userValue as $key => $value) {
+                    $userValue[$key] = $this->value*($value/100);
+                }
+                
+
             } elseif($this->split_type_id == 'Amount') {
                 foreach($userValue as $key => $value) {
                     $sum += $value;

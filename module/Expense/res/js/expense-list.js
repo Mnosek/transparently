@@ -95,7 +95,8 @@ require(['dojo/dom',
                 if (data.error) {
                     alert(data.error);
                 } else {
-                    window.location.reload();
+                    query('#addExpense').modal('hide');
+                    registry.byId('expensePane').set('href','/expense/index/list-pane');
                 }
             }
         );

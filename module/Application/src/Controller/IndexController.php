@@ -19,5 +19,9 @@ class IndexController extends BaseController
     public function indexAction()
     {   
         $this->setTitle('Dashboard');
+
+        $this->attach('balance', App::$user->getBalance());
+        $this->attach('groupBalance', App::$user->getGroupBalance());
+
     }
 }

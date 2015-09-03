@@ -16,7 +16,7 @@ class CycleController extends BaseController
 
     public function listAction()
     {
-        $this->setTitle('Wydatki cykliczne');
+        $this->setTitle('Wydatki cykliczne - nie zaimplementowano');
     }
 
 

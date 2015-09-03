@@ -24,6 +24,12 @@ class IndexController extends BaseController
     public function listPaneAction()
     {
         $this->setBlank();
+
+        $params = array(
+            'user_id' => App::$user->user_id
+        );
+
+        $this->attach('expenses', Expense::find($params, 'date'));
     }
 
 
